@@ -1,69 +1,89 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Sidebar from "../../components/Sidebar";
 import DashboardCards from "../../components/DashboardCards";
 import LeadsTable from "../../components/LeadsTable";
-import Sidebar from "../../components/Sidebar";
+import SearchFilter from "../../components/SearchFilter";
+
+import {
+  fetchLeadsApi,
+  updateLeadApi,
+  deleteLeadApi,
+} from "../../services/api";
 
 export default function LeadsPage() {
-  const [leads, setLeads] = useState<any[]>([]);
+  const [leads, setLeads] = useState([]);
+  const [search, setSearch] = useState("");
+  const [statusFilter, setStatusFilter] =
+    useState("All");
 
-  const fetchLeads = async () => {
-    const response = await fetch("http://localhost:5000/leads");
-    const data = await response.json();
+  const fetchData = async () => {
+    const data = await fetchLeadsApi();
     setLeads(data);
   };
 
   useEffect(() => {
-    fetchLeads();
+    fetchData();
   }, []);
 
-  const updateStatus = async (id: number, status: string) => {
-    await fetch(`http://localhost:5000/update-lead-status/${id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ status }),
-    });
-
-    fetchLeads();
+  const updateStatus = async (
+    id: number,
+    status: string
+  ) => {
+    await updateLeadApi(id, status);
+    fetchData();
   };
 
   const deleteLead = async (id: number) => {
-    if (!confirm("Delete this lead?")) return;
-
-    await fetch(`http://localhost:5000/delete-lead/${id}`, {
-      method: "DELETE",
-    });
-
-    fetchLeads();
+    await deleteLeadApi(id);
+    fetchData();
   };
 
+  const filteredLeads = leads.filter(
+    (lead: any) => {
+      const matchesSearch =
+        lead.company_name
+          .toLowerCase()
+          .includes(search.toLowerCase());
+
+      const matchesStatus =
+        statusFilter === "All"
+          ? true
+          : lead.status === statusFilter;
+
+      return matchesSearch && matchesStatus;
+    }
+  );
+
   return (
-    <div style={{ display: "flex" }}>
+    <div
+      style={{
+        display: "flex",
+        background: "#f3f4f6",
+      }}
+    >
       <Sidebar />
 
       <div
         style={{
           flex: 1,
           padding: "40px",
-          background: "#f8fafc",
-          minHeight: "100vh",
         }}
       >
-        <h1
-          style={{
-            marginBottom: "30px",
-            fontSize: "34px",
-            color: "#111",
-          }}
-        >
-          CRM Dashboard
-        </h1>
+        <h1>CRM Dashboard</h1>
 
         <DashboardCards leads={leads} />
 
+        <SearchFilter
+          search={search}
+          setSearch={setSearch}
+          statusFilter={statusFilter}
+          setStatusFilter={setStatusFilter}
+        />
+
         <LeadsTable
-          leads={leads}
+          leads={filteredLeads}
           updateStatus={updateStatus}
           deleteLead={deleteLead}
         />

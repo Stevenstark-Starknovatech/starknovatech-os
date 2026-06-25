@@ -1,3 +1,5 @@
+import { Lead } from "../types/lead";
+
 export default function LeadsTable({
   leads,
   updateStatus,
@@ -6,11 +8,9 @@ export default function LeadsTable({
   return (
     <div
       style={{
-        background: "#ffffff",
+        background: "white",
         padding: "20px",
-        borderRadius: "14px",
-        boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
-        overflowX: "auto",
+        borderRadius: "10px",
       }}
     >
       <table
@@ -20,34 +20,32 @@ export default function LeadsTable({
         }}
       >
         <thead>
-          <tr
-            style={{
-              background: "#f5f5f5",
-              textAlign: "left",
-            }}
-          >
-            <th style={thStyle}>Company</th>
-            <th style={thStyle}>Contact</th>
-            <th style={thStyle}>Service</th>
-            <th style={thStyle}>Budget</th>
-            <th style={thStyle}>Status</th>
-            <th style={thStyle}>Delete</th>
+          <tr>
+            <th>Company</th>
+            <th>Contact</th>
+            <th>Service</th>
+            <th>Budget</th>
+            <th>Status</th>
+            <th>Delete</th>
           </tr>
         </thead>
 
         <tbody>
-          {leads.map((lead: any) => (
+          {leads.map((lead: Lead) => (
             <tr key={lead.id}>
-              <td style={tdStyle}>{lead.company_name}</td>
-              <td style={tdStyle}>{lead.contact_person}</td>
-              <td style={tdStyle}>{lead.service_required}</td>
-              <td style={tdStyle}>₹{lead.budget}</td>
+              <td>{lead.company_name}</td>
+              <td>{lead.contact_person}</td>
+              <td>{lead.service_required}</td>
+              <td>₹{lead.budget}</td>
 
-              <td style={tdStyle}>
+              <td>
                 <select
                   value={lead.status}
                   onChange={(e) =>
-                    updateStatus(lead.id, e.target.value)
+                    updateStatus(
+                      lead.id,
+                      e.target.value
+                    )
                   }
                 >
                   <option>New Lead</option>
@@ -58,17 +56,11 @@ export default function LeadsTable({
                 </select>
               </td>
 
-              <td style={tdStyle}>
+              <td>
                 <button
-                  onClick={() => deleteLead(lead.id)}
-                  style={{
-                    background: "red",
-                    color: "white",
-                    border: "none",
-                    padding: "8px 12px",
-                    cursor: "pointer",
-                    borderRadius: "6px",
-                  }}
+                  onClick={() =>
+                    deleteLead(lead.id)
+                  }
                 >
                   Delete
                 </button>
@@ -80,12 +72,3 @@ export default function LeadsTable({
     </div>
   );
 }
-
-const thStyle = {
-  padding: "14px",
-};
-
-const tdStyle = {
-  padding: "14px",
-  borderBottom: "1px solid #eee",
-};

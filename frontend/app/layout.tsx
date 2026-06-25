@@ -1,33 +1,17 @@
-import Sidebar from "../components/Sidebar";
+export const metadata = {
+  title: "Starknovatech CRM",
+  description: "Starknovatech Internal CRM",
+};
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
-      <body
-        style={{
-          margin: 0,
-          padding: 0,
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-          }}
-        >
-          <Sidebar />
-
-          <div
-            style={{
-              flex: 1,
-            }}
-          >
-            {children}
-          </div>
-        </div>
+      <body>
+        {children}
       </body>
     </html>
   );
