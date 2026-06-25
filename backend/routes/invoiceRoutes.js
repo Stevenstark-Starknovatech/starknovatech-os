@@ -1,26 +1,40 @@
 const express = require("express");
 
 const {
-  createInvoice,
-  getInvoices,
-  downloadInvoicePdf,
+ createInvoice,
+ getInvoices,
+ downloadInvoicePdf,
 } = require("../controllers/invoiceController");
 
-const router = express.Router();
+const verifyToken =
+ require("../middleware/authMiddleware");
+
+const verifyAdmin =
+ require("../middleware/adminMiddleware");
+
+const router =
+ express.Router();
 
 router.post(
-  "/create-invoice",
-  createInvoice
+ "/create-invoice",
+ verifyToken,
+ verifyAdmin,
+ createInvoice
 );
 
 router.get(
-  "/invoices",
-  getInvoices
+ "/invoices",
+ verifyToken,
+ verifyAdmin,
+ getInvoices
 );
 
 router.get(
-  "/invoice-pdf/:id",
-  downloadInvoicePdf
+ "/invoice-pdf/:id",
+ verifyToken,
+ verifyAdmin,
+ downloadInvoicePdf
 );
 
-module.exports = router;
+module.exports =
+ router;
