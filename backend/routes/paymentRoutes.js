@@ -1,20 +1,32 @@
 const express = require("express");
 
 const {
-  addPayment,
-  getPayments,
+ addPayment,
+ getPayments
 } = require("../controllers/paymentController");
 
-const router = express.Router();
+const verifyToken =
+ require("../middleware/authMiddleware");
+
+const verifyAdmin =
+ require("../middleware/adminMiddleware");
+
+const router =
+ express.Router();
 
 router.post(
-  "/add-payment",
-  addPayment
+ "/add-payment",
+ verifyToken,
+ verifyAdmin,
+ addPayment
 );
 
 router.get(
-  "/payments",
-  getPayments
+ "/payments",
+ verifyToken,
+ verifyAdmin,
+ getPayments
 );
 
-module.exports = router;
+module.exports =
+ router;
