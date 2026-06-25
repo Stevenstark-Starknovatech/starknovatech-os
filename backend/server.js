@@ -5,6 +5,8 @@ const pool = require("./config/db");
 
 const leadRoutes = require("./routes/leadRoutes");
 const clientRoutes = require("./routes/clientRoutes");
+const projectRoutes = require("./routes/projectRoutes");
+const invoiceRoutes = require("./routes/invoiceRoutes");
 
 require("dotenv").config();
 
@@ -15,6 +17,8 @@ app.use(express.json());
 
 app.use("/", leadRoutes);
 app.use("/", clientRoutes);
+app.use("/", projectRoutes);
+app.use("/", invoiceRoutes);
 
 app.get("/", async (req, res) => {
   const result = await pool.query(

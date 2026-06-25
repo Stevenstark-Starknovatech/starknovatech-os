@@ -11,19 +11,10 @@ export default function Sidebar() {
     >
       <h2>STARKNOVATECH</h2>
 
-      <a
-        href="/leads"
-        style={linkStyle}
-      >
-        Leads
-      </a>
-
-      <a
-        href="/clients"
-        style={linkStyle}
-      >
-        Clients
-      </a>
+      <a href="/leads" style={linkStyle}>Leads</a>
+      <a href="/clients" style={linkStyle}>Clients</a>
+      <a href="/projects" style={linkStyle}>Projects</a>
+      <a href="/invoices" style={linkStyle}>Invoices</a>
     </div>
   );
 }
