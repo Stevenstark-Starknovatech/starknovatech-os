@@ -1,4 +1,22 @@
+"use client";
+
+import { useEffect, useState } from "react";
+
 export default function Sidebar() {
+
+ const [role,setRole] =
+ useState("");
+
+ useEffect(()=>{
+
+  const savedRole =
+   localStorage.getItem("role");
+
+  if(savedRole){
+   setRole(savedRole);
+  }
+
+ },[]);
 
  const logout=()=>{
 
@@ -10,16 +28,12 @@ export default function Sidebar() {
    "role"
   );
 
-  window.location.href=
+  window.location.href =
    "/login";
  };
 
- const role =
- typeof window !== "undefined"
- ? localStorage.getItem("role")
- : "";
-
  return (
+
   <div style={{
    width:"220px",
    background:"#111827",
@@ -46,12 +60,13 @@ export default function Sidebar() {
    </button>
 
   </div>
+
  );
 }
 
-const linkStyle={
+const linkStyle = {
  display:"block",
  color:"white",
  marginTop:"20px",
- textDecoration:"none",
+ textDecoration:"none"
 };
