@@ -1,0 +1,22 @@
+STARKNOVATECH OS ROADMAP
+
+PHASE 1 CRM
+
+[✓] Add Lead
+[ ] View All Leads
+[ ] Update Lead Status
+[ ] Delete Lead
+[ ] Dashboard Analytics
+
+PHASE 2 BUSINESS OPS
+
+[ ] Proposal Generator
+[ ] Invoice Generator
+[ ] Expense Tracker
+[ ] Payment Tracker
+
+PHASE 3 ADVANCED
+
+[ ] Authentication Login
+[ ] Role Management
+[ ] Client Portal

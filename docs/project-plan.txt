@@ -1,0 +1,15 @@
+Project Name: Starknovatech OS
+
+Goal:
+Internal company management system.
+
+Modules:
+
+1. Leads Management
+2. Client Management
+3. Invoice Generator
+4. Proposal Generator
+5. Project Tracker
+6. Expense Tracker
+7. Revenue Dashboard
+8. Employee Management
