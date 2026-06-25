@@ -1,75 +1,94 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect,useState } from "react";
 import Sidebar from "../../components/Sidebar";
 
 import {
-  fetchInvoicesApi,
+fetchInvoicesApi,
+addPaymentApi
 } from "../../services/api";
 
-export default function InvoicePage() {
-  const [invoices,setInvoices]=useState([]);
+export default function InvoicePage(){
 
-  const load = async()=>{
-    const data=await fetchInvoicesApi();
-    setInvoices(data);
-  };
+const [invoices,setInvoices]=useState([]);
 
-  useEffect(()=>{
-    load();
-  },[]);
+const load=async()=>{
+const data=await fetchInvoicesApi();
+setInvoices(data);
+};
 
-  const downloadPdf = (
-    id:number
-  ) => {
-    window.open(
-      `http://localhost:5000/invoice-pdf/${id}`
-    );
-  };
+useEffect(()=>{
+load();
+},[]);
 
-  return (
-    <div style={{display:"flex"}}>
-      <Sidebar />
+const downloadPdf=(id:number)=>{
+window.open(`http://localhost:5000/invoice-pdf/${id}`);
+};
 
-      <div style={{flex:1,padding:"40px"}}>
-        <h1>Invoices</h1>
+const addPayment=async(invoice:any)=>{
+const paid_amount=prompt("Paid Amount");
 
-        <table style={{width:"100%"}}>
-          <thead>
-            <tr>
-              <th>Client</th>
-              <th>Invoice No</th>
-              <th>Amount</th>
-              <th>PDF</th>
-            </tr>
-          </thead>
+await addPaymentApi({
+invoice_id:invoice.id,
+client_name:invoice.client_name,
+total_amount:invoice.amount,
+paid_amount
+});
 
-          <tbody>
-            {invoices.map((invoice:any)=>(
-              <tr key={invoice.id}>
-                <td>{invoice.client_name}</td>
+alert("Payment Added");
+};
 
-                <td>
-                  {invoice.invoice_number}
-                </td>
+return(
+<div style={{display:"flex"}}>
 
-                <td>
-                  ₹{invoice.amount}
-                </td>
+<Sidebar />
 
-                <td>
-                  <button
-                    onClick={()=>downloadPdf(invoice.id)}
-                  >
-                    Download PDF
-                  </button>
-                </td>
+<div style={{flex:1,padding:"40px"}}>
 
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  );
+<h1>Invoices</h1>
+
+<table style={{width:"100%"}}>
+
+<thead>
+<tr>
+<th>Client</th>
+<th>Amount</th>
+<th>PDF</th>
+<th>Payment</th>
+</tr>
+</thead>
+
+<tbody>
+
+{invoices.map((invoice:any)=>(
+<tr key={invoice.id}>
+
+<td>{invoice.client_name}</td>
+
+<td>₹{invoice.amount}</td>
+
+<td>
+<button onClick={()=>downloadPdf(invoice.id)}>
+PDF
+</button>
+</td>
+
+<td>
+<button onClick={()=>addPayment(invoice)}>
+Add Payment
+</button>
+</td>
+
+</tr>
+))}
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+);
+
 }

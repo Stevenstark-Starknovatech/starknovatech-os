@@ -9,6 +9,7 @@ export default function Sidebar() {
       <a href="/projects" style={linkStyle}>Projects</a>
       <a href="/invoices" style={linkStyle}>Invoices</a>
       <a href="/proposals" style={linkStyle}>Proposals</a>
+      <a href="/payments" style={linkStyle}>Payments</a>
 
     </div>
   );
