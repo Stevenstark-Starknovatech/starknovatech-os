@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Sidebar() {
   return (
     <div
@@ -18,18 +20,21 @@ export default function Sidebar() {
         STARKNOVATECH
       </h2>
 
-      <div style={menuStyle}>Dashboard</div>
-      <div style={menuStyle}>Leads</div>
-      <div style={menuStyle}>Clients</div>
-      <div style={menuStyle}>Invoices</div>
-      <div style={menuStyle}>Payments</div>
-      <div style={menuStyle}>Settings</div>
+      <Link href="/leads" style={linkStyle}>Dashboard</Link>
+      <Link href="/leads" style={linkStyle}>Leads</Link>
+      <Link href="/clients" style={linkStyle}>Clients</Link>
+      <Link href="/invoices" style={linkStyle}>Invoices</Link>
+      <Link href="/payments" style={linkStyle}>Payments</Link>
+      <Link href="/settings" style={linkStyle}>Settings</Link>
     </div>
   );
 }
 
-const menuStyle = {
+const linkStyle = {
+  display: "block",
   marginBottom: "20px",
   cursor: "pointer",
   fontSize: "16px",
+  color: "white",
+  textDecoration: "none",
 };
