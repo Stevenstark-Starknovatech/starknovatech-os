@@ -9,6 +9,7 @@ const projectRoutes = require("./routes/projectRoutes");
 const invoiceRoutes = require("./routes/invoiceRoutes");
 const proposalRoutes = require("./routes/proposalRoutes");
 const paymentRoutes = require("./routes/paymentRoutes");
+const authRoutes = require("./routes/authRoutes");
 
 require("dotenv").config();
 
@@ -23,20 +24,21 @@ app.use("/", projectRoutes);
 app.use("/", invoiceRoutes);
 app.use("/", proposalRoutes);
 app.use("/", paymentRoutes);
+app.use("/", authRoutes);
 
-app.get("/", async (req, res) => {
-  const result = await pool.query(
-    "SELECT NOW()"
-  );
+app.get("/", async (req,res)=>{
+ const result=await pool.query(
+  "SELECT NOW()"
+ );
 
-  res.json({
-    message: "Backend Running",
-    database_time: result.rows[0],
-  });
+ res.json({
+  message:"Backend Running",
+  database_time:result.rows[0]
+ });
 });
 
-app.listen(process.env.PORT, () => {
-  console.log(
-    `Server running on port ${process.env.PORT}`
-  );
+app.listen(process.env.PORT,()=>{
+ console.log(
+  `Server running on port ${process.env.PORT}`
+ );
 });
