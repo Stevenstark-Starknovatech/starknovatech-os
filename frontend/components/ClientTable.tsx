@@ -1,76 +1,146 @@
 import {
-  addProjectApi,
-  createInvoiceApi,
-  createProposalApi,
+ addProjectApi,
+ createInvoiceApi,
+ createProposalApi,
 } from "../services/api";
 
 export default function ClientTable({
-  clients,
+ clients,
 }: any) {
 
-  const createProject = async (client:any)=>{
-    const project_name=prompt("Project Name");
-    const assigned_to=prompt("Assign To");
-    const deadline=prompt("Deadline");
+const role =
+ typeof window !== "undefined"
+ ? localStorage.getItem("role")
+ : "";
 
-    await addProjectApi({
-      client_id:client.id,
-      client_name:client.company_name,
-      project_name,
-      assigned_to,
-      deadline,
-    });
-  };
+ const createProject =
+ async(client:any)=>{
 
-  const createInvoice = async (client:any)=>{
-    const amount=prompt("Amount");
+  const project_name =
+   prompt("Project Name");
 
-    await createInvoiceApi({
-      client_id:client.id,
-      client_name:client.company_name,
-      amount,
-    });
-  };
+  const assigned_to =
+   prompt("Assign To");
 
-  const createProposal = async (client:any)=>{
-    const service=prompt("Service");
-    const price=prompt("Price");
-    const timeline=prompt("Timeline");
+  const deadline =
+   prompt("Deadline");
 
-    await createProposalApi({
-      client_id:client.id,
-      client_name:client.company_name,
-      service,
-      price,
-      timeline,
-    });
-  };
+  await addProjectApi({
+   client_id:client.id,
+   client_name:
+    client.company_name,
+   project_name,
+   assigned_to,
+   deadline,
+  });
+ };
 
-  return (
-    <table style={{width:"100%"}}>
-      <thead>
-        <tr>
-          <th>Company</th>
-          <th>Project</th>
-          <th>Invoice</th>
-          <th>Proposal</th>
-        </tr>
-      </thead>
+ const createInvoice =
+ async(client:any)=>{
 
-      <tbody>
-        {clients.map((client:any)=>(
-          <tr key={client.id}>
-            <td>{client.company_name}</td>
+  const amount=
+   prompt("Amount");
 
-            <td><button onClick={()=>createProject(client)}>Project</button></td>
+  await createInvoiceApi({
+   client_id:client.id,
+   client_name:
+    client.company_name,
+   amount,
+  });
+ };
 
-            <td><button onClick={()=>createInvoice(client)}>Invoice</button></td>
+ const createProposal =
+ async(client:any)=>{
 
-            <td><button onClick={()=>createProposal(client)}>Proposal</button></td>
+  const service=
+   prompt("Service");
 
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  );
+  const price=
+   prompt("Price");
+
+  const timeline=
+   prompt("Timeline");
+
+  await createProposalApi({
+   client_id:client.id,
+   client_name:
+    client.company_name,
+   service,
+   price,
+   timeline,
+  });
+ };
+
+ return (
+  <table style={{width:"100%"}}>
+
+   <thead>
+    <tr>
+     <th>Company</th>
+     <th>Project</th>
+     <th>Invoice</th>
+     <th>Proposal</th>
+    </tr>
+   </thead>
+
+   <tbody>
+
+   {clients.map(
+    (client:any)=>(
+     <tr key={client.id}>
+
+      <td>
+       {client.company_name}
+      </td>
+
+      <td>
+       <button
+        onClick={()=>
+         createProject(client)
+        }
+       >
+        Project
+       </button>
+      </td>
+
+      <td>
+
+      {role==="admin" && (
+
+       <button
+        onClick={()=>
+         createInvoice(client)
+        }
+       >
+        Invoice
+       </button>
+
+      )}
+
+      </td>
+
+      <td>
+
+      {role==="admin" && (
+
+       <button
+        onClick={()=>
+         createProposal(client)
+        }
+       >
+        Proposal
+       </button>
+
+      )}
+
+      </td>
+
+     </tr>
+    )
+   )}
+
+   </tbody>
+
+  </table>
+ );
 }
