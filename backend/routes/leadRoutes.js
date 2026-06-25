@@ -11,6 +11,9 @@ const {
 const verifyToken =
  require("../middleware/authMiddleware");
 
+const verifyAdmin =
+ require("../middleware/adminMiddleware");
+
 const router =
  express.Router();
 
@@ -35,12 +38,14 @@ router.put(
 router.delete(
  "/delete-lead/:id",
  verifyToken,
+ verifyAdmin,
  deleteLead
 );
 
 router.post(
  "/convert-client/:id",
  verifyToken,
+ verifyAdmin,
  convertLeadToClient
 );
 
