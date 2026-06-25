@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+
 import Sidebar from "../../components/Sidebar";
 import DashboardCards from "../../components/DashboardCards";
 import LeadsTable from "../../components/LeadsTable";
@@ -10,6 +11,7 @@ import {
   fetchLeadsApi,
   updateLeadApi,
   deleteLeadApi,
+  convertClientApi,
 } from "../../services/api";
 
 export default function LeadsPage() {
@@ -37,6 +39,11 @@ export default function LeadsPage() {
 
   const deleteLead = async (id: number) => {
     await deleteLeadApi(id);
+    fetchData();
+  };
+
+  const convertLead = async (id: number) => {
+    await convertClientApi(id);
     fetchData();
   };
 
@@ -71,7 +78,7 @@ export default function LeadsPage() {
           padding: "40px",
         }}
       >
-        <h1>CRM Dashboard</h1>
+        <h1>Leads</h1>
 
         <DashboardCards leads={leads} />
 
@@ -86,6 +93,7 @@ export default function LeadsPage() {
           leads={filteredLeads}
           updateStatus={updateStatus}
           deleteLead={deleteLead}
+          convertLead={convertLead}
         />
       </div>
     </div>

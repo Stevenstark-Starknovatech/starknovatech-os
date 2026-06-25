@@ -33,3 +33,22 @@ export const deleteLeadApi = async (
     }
   );
 };
+
+export const convertClientApi = async (
+  id: number
+) => {
+  await fetch(
+    `${BASE_URL}/convert-client/${id}`,
+    {
+      method: "POST",
+    }
+  );
+};
+
+export const fetchClientsApi =
+  async () => {
+    const response = await fetch(
+      `${BASE_URL}/clients`
+    );
+    return response.json();
+  };

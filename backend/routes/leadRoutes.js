@@ -5,6 +5,7 @@ const {
   getLeads,
   updateLeadStatus,
   deleteLead,
+  convertLeadToClient,
 } = require("../controllers/leadController");
 
 const router = express.Router();
@@ -21,6 +22,11 @@ router.put(
 router.delete(
   "/delete-lead/:id",
   deleteLead
+);
+
+router.post(
+  "/convert-client/:id",
+  convertLeadToClient
 );
 
 module.exports = router;

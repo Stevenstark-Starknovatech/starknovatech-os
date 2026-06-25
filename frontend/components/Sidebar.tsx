@@ -11,11 +11,26 @@ export default function Sidebar() {
     >
       <h2>STARKNOVATECH</h2>
 
-      <p>Dashboard</p>
-      <p>Leads</p>
-      <p>Clients</p>
-      <p>Invoices</p>
-      <p>Projects</p>
+      <a
+        href="/leads"
+        style={linkStyle}
+      >
+        Leads
+      </a>
+
+      <a
+        href="/clients"
+        style={linkStyle}
+      >
+        Clients
+      </a>
     </div>
   );
 }
+
+const linkStyle = {
+  display: "block",
+  color: "white",
+  marginTop: "20px",
+  textDecoration: "none",
+};

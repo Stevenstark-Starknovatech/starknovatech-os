@@ -4,6 +4,7 @@ export default function LeadsTable({
   leads,
   updateStatus,
   deleteLead,
+  convertLead,
 }: any) {
   return (
     <div
@@ -13,19 +14,12 @@ export default function LeadsTable({
         borderRadius: "10px",
       }}
     >
-      <table
-        style={{
-          width: "100%",
-          borderCollapse: "collapse",
-        }}
-      >
+      <table style={{ width: "100%" }}>
         <thead>
           <tr>
             <th>Company</th>
-            <th>Contact</th>
-            <th>Service</th>
-            <th>Budget</th>
             <th>Status</th>
+            <th>Convert</th>
             <th>Delete</th>
           </tr>
         </thead>
@@ -34,9 +28,6 @@ export default function LeadsTable({
           {leads.map((lead: Lead) => (
             <tr key={lead.id}>
               <td>{lead.company_name}</td>
-              <td>{lead.contact_person}</td>
-              <td>{lead.service_required}</td>
-              <td>₹{lead.budget}</td>
 
               <td>
                 <select
@@ -54,6 +45,16 @@ export default function LeadsTable({
                   <option>Closed</option>
                   <option>Lost</option>
                 </select>
+              </td>
+
+              <td>
+                <button
+                  onClick={() =>
+                    convertLead(lead.id)
+                  }
+                >
+                  Convert
+                </button>
               </td>
 
               <td>

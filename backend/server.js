@@ -1,7 +1,10 @@
 const express = require("express");
 const cors = require("cors");
+
 const pool = require("./config/db");
+
 const leadRoutes = require("./routes/leadRoutes");
+const clientRoutes = require("./routes/clientRoutes");
 
 require("dotenv").config();
 
@@ -11,19 +14,17 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/", leadRoutes);
+app.use("/", clientRoutes);
 
 app.get("/", async (req, res) => {
-  try {
-    const result = await pool.query("SELECT NOW()");
+  const result = await pool.query(
+    "SELECT NOW()"
+  );
 
-    res.json({
-      message: "Backend Running",
-      database_time: result.rows[0],
-    });
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send("Database error");
-  }
+  res.json({
+    message: "Backend Running",
+    database_time: result.rows[0],
+  });
 });
 
 app.listen(process.env.PORT, () => {
