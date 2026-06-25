@@ -1,32 +1,48 @@
 const express = require("express");
 
 const {
-  addLead,
-  getLeads,
-  updateLeadStatus,
-  deleteLead,
-  convertLeadToClient,
+ addLead,
+ getLeads,
+ updateLeadStatus,
+ deleteLead,
+ convertLeadToClient,
 } = require("../controllers/leadController");
 
-const router = express.Router();
+const verifyToken =
+ require("../middleware/authMiddleware");
 
-router.post("/add-lead", addLead);
+const router =
+ express.Router();
 
-router.get("/leads", getLeads);
+router.post(
+ "/add-lead",
+ verifyToken,
+ addLead
+);
+
+router.get(
+ "/leads",
+ verifyToken,
+ getLeads
+);
 
 router.put(
-  "/update-lead-status/:id",
-  updateLeadStatus
+ "/update-lead-status/:id",
+ verifyToken,
+ updateLeadStatus
 );
 
 router.delete(
-  "/delete-lead/:id",
-  deleteLead
+ "/delete-lead/:id",
+ verifyToken,
+ deleteLead
 );
 
 router.post(
-  "/convert-client/:id",
-  convertLeadToClient
+ "/convert-client/:id",
+ verifyToken,
+ convertLeadToClient
 );
 
-module.exports = router;
+module.exports =
+ router;
