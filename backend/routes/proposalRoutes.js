@@ -1,26 +1,40 @@
 const express = require("express");
 
 const {
-  createProposal,
-  getProposals,
-  downloadProposalPdf,
+ createProposal,
+ getProposals,
+ downloadProposalPdf,
 } = require("../controllers/proposalController");
 
-const router = express.Router();
+const verifyToken =
+ require("../middleware/authMiddleware");
+
+const verifyAdmin =
+ require("../middleware/adminMiddleware");
+
+const router =
+ express.Router();
 
 router.post(
-  "/create-proposal",
-  createProposal
+ "/create-proposal",
+ verifyToken,
+ verifyAdmin,
+ createProposal
 );
 
 router.get(
-  "/proposals",
-  getProposals
+ "/proposals",
+ verifyToken,
+ verifyAdmin,
+ getProposals
 );
 
 router.get(
-  "/proposal-pdf/:id",
-  downloadProposalPdf
+ "/proposal-pdf/:id",
+ verifyToken,
+ verifyAdmin,
+ downloadProposalPdf
 );
 
-module.exports = router;
+module.exports =
+ router;
