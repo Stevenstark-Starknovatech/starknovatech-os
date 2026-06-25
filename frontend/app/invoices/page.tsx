@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Sidebar from "../../components/Sidebar";
+
 import {
   fetchInvoicesApi,
 } from "../../services/api";
@@ -18,6 +19,14 @@ export default function InvoicePage() {
     load();
   },[]);
 
+  const downloadPdf = (
+    id:number
+  ) => {
+    window.open(
+      `http://localhost:5000/invoice-pdf/${id}`
+    );
+  };
+
   return (
     <div style={{display:"flex"}}>
       <Sidebar />
@@ -31,7 +40,7 @@ export default function InvoicePage() {
               <th>Client</th>
               <th>Invoice No</th>
               <th>Amount</th>
-              <th>Status</th>
+              <th>PDF</th>
             </tr>
           </thead>
 
@@ -39,9 +48,23 @@ export default function InvoicePage() {
             {invoices.map((invoice:any)=>(
               <tr key={invoice.id}>
                 <td>{invoice.client_name}</td>
-                <td>{invoice.invoice_number}</td>
-                <td>₹{invoice.amount}</td>
-                <td>{invoice.status}</td>
+
+                <td>
+                  {invoice.invoice_number}
+                </td>
+
+                <td>
+                  ₹{invoice.amount}
+                </td>
+
+                <td>
+                  <button
+                    onClick={()=>downloadPdf(invoice.id)}
+                  >
+                    Download PDF
+                  </button>
+                </td>
+
               </tr>
             ))}
           </tbody>

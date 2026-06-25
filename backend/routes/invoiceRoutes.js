@@ -3,6 +3,7 @@ const express = require("express");
 const {
   createInvoice,
   getInvoices,
+  downloadInvoicePdf,
 } = require("../controllers/invoiceController");
 
 const router = express.Router();
@@ -15,6 +16,11 @@ router.post(
 router.get(
   "/invoices",
   getInvoices
+);
+
+router.get(
+  "/invoice-pdf/:id",
+  downloadInvoicePdf
 );
 
 module.exports = router;
