@@ -8,6 +8,7 @@ const clientRoutes = require("./routes/clientRoutes");
 const projectRoutes = require("./routes/projectRoutes");
 const invoiceRoutes = require("./routes/invoiceRoutes");
 const proposalRoutes = require("./routes/proposalRoutes");
+const paymentRoutes = require("./routes/paymentRoutes");
 
 require("dotenv").config();
 
@@ -21,6 +22,7 @@ app.use("/", clientRoutes);
 app.use("/", projectRoutes);
 app.use("/", invoiceRoutes);
 app.use("/", proposalRoutes);
+app.use("/", paymentRoutes);
 
 app.get("/", async (req, res) => {
   const result = await pool.query(
