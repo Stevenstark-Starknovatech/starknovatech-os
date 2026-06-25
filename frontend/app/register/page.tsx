@@ -28,6 +28,10 @@ role
 );
 
 alert("Registered");
+
+window.location.href =
+"/login";
+
 };
 
 return(
@@ -36,21 +40,24 @@ return(
 
 <h1>Register</h1>
 
-<input placeholder="Name"
+<input
+placeholder="Name"
 value={name}
 onChange={(e)=>setName(e.target.value)}
 />
 
 <br/><br/>
 
-<input placeholder="Email"
+<input
+placeholder="Email"
 value={email}
 onChange={(e)=>setEmail(e.target.value)}
 />
 
 <br/><br/>
 
-<input placeholder="Password"
+<input
+placeholder="Password"
 type="password"
 value={password}
 onChange={(e)=>setPassword(e.target.value)}
@@ -62,8 +69,10 @@ onChange={(e)=>setPassword(e.target.value)}
 value={role}
 onChange={(e)=>setRole(e.target.value)}
 >
+
 <option>admin</option>
 <option>employee</option>
+
 </select>
 
 <br/><br/>
@@ -73,5 +82,7 @@ Register
 </button>
 
 </div>
+
 );
+
 }
