@@ -1,31 +1,49 @@
 "use client";
 
 import { useEffect,useState } from "react";
-
 import Sidebar from "../../components/Sidebar";
-
 import {
 fetchProposalsApi
 } from "../../services/api";
 
 export default function ProposalPage(){
 
-const [proposals,setProposals]=useState([]);
-
-const load=async()=>{
-const data=await fetchProposalsApi();
-setProposals(data);
-};
+const [proposals,setProposals]=
+useState([]);
 
 useEffect(()=>{
+
+const role =
+localStorage.getItem("role");
+
+if(role!=="admin"){
+window.location.href="/leads";
+return;
+}
+
 load();
+
 },[]);
 
+const load=async()=>{
+
+const data=
+await fetchProposalsApi();
+
+setProposals(data);
+
+};
+
 const downloadPdf=(id:number)=>{
-window.open(`http://localhost:5000/proposal-pdf/${id}`);
+
+window.open(
+`http://localhost:5000/proposal-pdf/${id}`
+);
+
 };
 
 return(
+
 <div style={{display:"flex"}}>
 
 <Sidebar />
@@ -47,6 +65,7 @@ return(
 <tbody>
 
 {proposals.map((proposal:any)=>(
+
 <tr key={proposal.id}>
 
 <td>{proposal.client_name}</td>
@@ -54,12 +73,19 @@ return(
 <td>{proposal.proposal_number}</td>
 
 <td>
-<button onClick={()=>downloadPdf(proposal.id)}>
+
+<button
+onClick={()=>
+downloadPdf(proposal.id)
+}
+>
 Download PDF
 </button>
+
 </td>
 
 </tr>
+
 ))}
 
 </tbody>
@@ -69,6 +95,7 @@ Download PDF
 </div>
 
 </div>
+
 );
 
 }

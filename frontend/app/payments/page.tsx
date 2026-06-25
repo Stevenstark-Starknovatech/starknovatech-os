@@ -2,25 +2,37 @@
 
 import { useEffect,useState } from "react";
 import Sidebar from "../../components/Sidebar";
-
-import {
-fetchPaymentsApi
-} from "../../services/api";
+import { fetchPaymentsApi } from "../../services/api";
 
 export default function PaymentsPage(){
 
 const [payments,setPayments]=useState([]);
 
-const load=async()=>{
-const data=await fetchPaymentsApi();
-setPayments(data);
-};
-
 useEffect(()=>{
+
+const role =
+localStorage.getItem("role");
+
+if(role!=="admin"){
+window.location.href="/leads";
+return;
+}
+
 load();
+
 },[]);
 
+const load=async()=>{
+
+const data =
+await fetchPaymentsApi();
+
+setPayments(data);
+
+};
+
 return(
+
 <div style={{display:"flex"}}>
 
 <Sidebar />
@@ -43,6 +55,7 @@ return(
 <tbody>
 
 {payments.map((payment:any)=>(
+
 <tr key={payment.id}>
 
 <td>{payment.client_name}</td>
@@ -54,6 +67,7 @@ return(
 <td>₹{payment.pending_amount}</td>
 
 </tr>
+
 ))}
 
 </tbody>
@@ -63,6 +77,7 @@ return(
 </div>
 
 </div>
+
 );
 
 }

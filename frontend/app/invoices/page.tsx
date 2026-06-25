@@ -2,7 +2,6 @@
 
 import { useEffect,useState } from "react";
 import Sidebar from "../../components/Sidebar";
-
 import {
 fetchInvoicesApi,
 addPaymentApi
@@ -12,21 +11,41 @@ export default function InvoicePage(){
 
 const [invoices,setInvoices]=useState([]);
 
-const load=async()=>{
-const data=await fetchInvoicesApi();
-setInvoices(data);
-};
-
 useEffect(()=>{
+
+const role =
+localStorage.getItem("role");
+
+if(role!=="admin"){
+window.location.href="/leads";
+return;
+}
+
 load();
+
 },[]);
 
+const load=async()=>{
+
+const data=
+await fetchInvoicesApi();
+
+setInvoices(data);
+
+};
+
 const downloadPdf=(id:number)=>{
-window.open(`http://localhost:5000/invoice-pdf/${id}`);
+
+window.open(
+`http://localhost:5000/invoice-pdf/${id}`
+);
+
 };
 
 const addPayment=async(invoice:any)=>{
-const paid_amount=prompt("Paid Amount");
+
+const paid_amount=
+prompt("Paid Amount");
 
 await addPaymentApi({
 invoice_id:invoice.id,
@@ -36,9 +55,11 @@ paid_amount
 });
 
 alert("Payment Added");
+
 };
 
 return(
+
 <div style={{display:"flex"}}>
 
 <Sidebar />
@@ -61,6 +82,7 @@ return(
 <tbody>
 
 {invoices.map((invoice:any)=>(
+
 <tr key={invoice.id}>
 
 <td>{invoice.client_name}</td>
@@ -68,18 +90,31 @@ return(
 <td>₹{invoice.amount}</td>
 
 <td>
-<button onClick={()=>downloadPdf(invoice.id)}>
+
+<button
+onClick={()=>
+downloadPdf(invoice.id)
+}
+>
 PDF
 </button>
+
 </td>
 
 <td>
-<button onClick={()=>addPayment(invoice)}>
+
+<button
+onClick={()=>
+addPayment(invoice)
+}
+>
 Add Payment
 </button>
+
 </td>
 
 </tr>
+
 ))}
 
 </tbody>
@@ -89,6 +124,7 @@ Add Payment
 </div>
 
 </div>
+
 );
 
 }
