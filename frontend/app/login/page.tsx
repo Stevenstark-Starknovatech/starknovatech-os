@@ -30,6 +30,11 @@ localStorage.setItem(
 data.token
 );
 
+localStorage.setItem(
+"role",
+data.role
+);
+
 alert("Login Success");
 
 window.location.href="/leads";
@@ -37,9 +42,7 @@ window.location.href="/leads";
 
 return(
 
-<div style={{
-padding:"100px"
-}}>
+<div style={{padding:"100px"}}>
 
 <h1>Login</h1>
 
