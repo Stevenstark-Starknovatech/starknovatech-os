@@ -1,13 +1,18 @@
+"use client";
+
 export default function Sidebar() {
+
+ const role =
+  typeof window !== "undefined"
+  ? localStorage.getItem("role")
+  : "";
 
  const logout=()=>{
 
-  localStorage.removeItem(
-   "token"
-  );
+  localStorage.removeItem("token");
+  localStorage.removeItem("role");
 
-  window.location.href=
-   "/login";
+  window.location.href="/login";
  };
 
  return (
@@ -21,12 +26,17 @@ export default function Sidebar() {
 
    <h2>STARKNOVATECH</h2>
 
-   <a href="/leads" style={linkStyle}>Leads</a>
-   <a href="/clients" style={linkStyle}>Clients</a>
+   {role==="admin" && (
+   <>
+    <a href="/leads" style={linkStyle}>Leads</a>
+    <a href="/clients" style={linkStyle}>Clients</a>
+    <a href="/invoices" style={linkStyle}>Invoices</a>
+    <a href="/proposals" style={linkStyle}>Proposals</a>
+    <a href="/payments" style={linkStyle}>Payments</a>
+   </>
+   )}
+
    <a href="/projects" style={linkStyle}>Projects</a>
-   <a href="/invoices" style={linkStyle}>Invoices</a>
-   <a href="/proposals" style={linkStyle}>Proposals</a>
-   <a href="/payments" style={linkStyle}>Payments</a>
 
    <br/><br/>
 

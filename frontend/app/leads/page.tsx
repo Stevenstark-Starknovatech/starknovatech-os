@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 import Sidebar from "../../components/Sidebar";
 import DashboardCards from "../../components/DashboardCards";
@@ -15,19 +16,31 @@ import {
 } from "../../services/api";
 
 export default function LeadsPage() {
+  const router = useRouter();
+
   const [leads, setLeads] = useState([]);
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] =
     useState("All");
 
+  const role =
+    typeof window !== "undefined"
+      ? localStorage.getItem("role")
+      : "";
+
+  useEffect(() => {
+    if (role === "employee") {
+      router.push("/projects");
+      return;
+    }
+
+    fetchData();
+  }, []);
+
   const fetchData = async () => {
     const data = await fetchLeadsApi();
     setLeads(data);
   };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   const updateStatus = async (
     id: number,
@@ -59,7 +72,10 @@ export default function LeadsPage() {
           ? true
           : lead.status === statusFilter;
 
-      return matchesSearch && matchesStatus;
+      return (
+        matchesSearch &&
+        matchesStatus
+      );
     }
   );
 
